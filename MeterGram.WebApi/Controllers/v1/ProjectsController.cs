@@ -32,7 +32,19 @@ namespace MeterGram.WebApi.Controllers.v1
         {
             var query = new GetAllProjects.Query { OnlyActive = onlyActive };
 
-            return await _mediator.SendAndProcessResponseAsync<GetAllProjects.Query, IEnumerable<ProjectResponse>>(_mapper, query);
+            return await _mediator.SendAndProcessResponseAsync<GetAllProjects.Query, IList<ProjectResponse>>(_mapper, query);
+        }
+
+        [HttpGet]
+        [Route("synchronize")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectResponse>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ValidationErrorResponse>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ServerErrorResponse))]
+        public async Task<IActionResult> Synchronize([FromQuery] Boolean shouldGetUpdatedData)
+        {
+            var query = new SynchronizeProjects.Query { ShouldGetUpdatedData = shouldGetUpdatedData };
+
+            return await _mediator.SendAsync<SynchronizeProjects.Query>(query);
         }
     }
 }

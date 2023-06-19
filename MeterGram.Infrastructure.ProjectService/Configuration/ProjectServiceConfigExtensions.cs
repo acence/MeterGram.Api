@@ -1,13 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MeterGram.Infrastructure.Interfaces.ProjectService;
+using MeterGram.Infrastructure.ProjectService.Options;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace MeterGram.Infrastructure.ProjectService.Configuration
+namespace MeterGram.Infrastructure.ProjectService.Configuration;
+
+public static class ProjectServiceConfigExtensions
 {
-    public static class ProjectServiceConfigExtensions
+    public static IServiceCollection AddProjectService(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddProjectService(this IServiceCollection services)
-        {
-            services.AddMemoryCache();
-            return services;
-        }
+        services.Configure<ProjectServiceOptions>(configuration.GetSection("ProjectService"));
+        services.AddMemoryCache();
+        services.AddTransient<IProjectExternalService, ProjectExternalService>();
+
+        return services;
     }
 }

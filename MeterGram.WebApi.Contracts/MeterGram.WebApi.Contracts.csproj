@@ -11,4 +11,12 @@
     <Folder Include="Requests\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MeterGram.Domain.Models\MeterGram.Domain.Models.csproj" />
+  </ItemGroup>
+
 </Project>

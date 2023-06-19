@@ -26,5 +26,29 @@ public class ProjectRepository : BaseRepository<Project>, IProjectRepository
 
         return await projects.ToListAsync(cancellationToken);
     }
+
+    public async Task BulkUpsertWithIdentity(IList<Project> projects)
+    {
+        var context = (_context as DatabaseContext);
+        using (var transaction = context.Database.BeginTransaction())
+        {
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Projects ON;");
+            foreach(var project in projects)
+            {
+                if(!Entities.Any(x => x.Id == project.Id))
+                {
+                    context.Entry(project).State = EntityState.Added;
+                }
+                else
+                {
+                    context.Entry(project).State = EntityState.Modified;
+                }
+            }
+
+            await context.SaveChangesAsync();
+            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Projects OFF");
+            await transaction.CommitAsync();
+        }
+    }
 }
 

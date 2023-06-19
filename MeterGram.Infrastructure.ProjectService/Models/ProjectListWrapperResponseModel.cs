@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections;
+using System.Text.Json.Serialization;
 
 namespace MeterGram.Infrastructure.ProjectService.Models
 {
@@ -13,6 +14,7 @@ namespace MeterGram.Infrastructure.ProjectService.Models
         [JsonPropertyName("max_limit")]
         public Int32 MaxLimit { get; set; }
 
-        public String Data { get; set; }
+        [JsonPropertyName("data")]
+        public IEnumerable<ProjectResponseModel> Data { get; set; }
     }
 }
