@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "MeterGram.ProjectSyncFunction": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7138"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 30453,
+      "useSSL": false
+    }
+  }
+}

@@ -1,0 +1,4 @@
+#run in WebApi folder
+dotnet ef migrations add [MigrationName] --project ../MeterGram.Infrastructure.Database
+
+dotnet ef database update
