@@ -28,7 +28,7 @@ namespace MeterGram.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProjectResponse>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ValidationErrorResponse>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ServerErrorResponse))]
-        public async Task<IActionResult> GetAll([FromQuery] Boolean onlyActive)
+        public async Task<IActionResult> GetAll([FromQuery] Boolean onlyActive = true)
         {
             var query = new GetAllProjects.Query { OnlyActive = onlyActive };
 

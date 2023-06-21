@@ -4,5 +4,5 @@ namespace MeterGram.Infrastructure.Interfaces.ProjectService;
 
 public interface IProjectExternalService
 {
-    Task<IList<Project>> GetProjectsAsync(bool updateProjects, CancellationToken cancellationToken);
+    Task<IList<Project>> GetProjectsAsync(Boolean updateProjects, CancellationToken cancellationToken);
 }

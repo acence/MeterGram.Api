@@ -19,6 +19,6 @@ public class GetAllProjects : IRequestHandler<GetAllProjects.Query, IList<Projec
 
     public class Query: IRequest<IList<Project>>
 	{
-        public bool OnlyActive { get; set; }
+        public Boolean OnlyActive { get; set; }
     }
 }

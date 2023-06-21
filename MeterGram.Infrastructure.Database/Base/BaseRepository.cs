@@ -31,30 +31,30 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         return Entities.AsNoTracking();
     }
 
-    public virtual async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public virtual async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await Entities.FirstOrDefaultAsync(x => x.Id == id);
+        return await Entities.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
-    public virtual async Task<int> InsertAsync(T entity, CancellationToken cancellationToken)
+    public virtual async Task<int> InsertAsync(T entity, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
         (_context as DbContext)!.Entry(entity).State = EntityState.Added;
 
-        return await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task<int> UpdateAsync(T entity, CancellationToken cancellationToken)
+    public virtual async Task<Int32> UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
         (_context as DbContext)!.Entry(entity).State = EntityState.Modified;
 
-        return await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual async Task<int> InsertOrUpdateAsync(Expression<Func<T, bool>> comparer, T entity, CancellationToken cancellationToken)
+    public virtual async Task<Int32> InsertOrUpdateAsync(Expression<Func<T, bool>> comparer, T entity, CancellationToken cancellationToken = default)
     {
         if (!Entities.Any(comparer))
         {
@@ -66,12 +66,12 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         }
     }
 
-    public virtual async Task<int> DeleteAsync(T entity, CancellationToken cancellationToken)
+    public virtual async Task<Int32> DeleteAsync(T entity, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(entity);
 
         Entities.Remove(entity);
 
-        return await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync(cancellationToken);
     }
 }

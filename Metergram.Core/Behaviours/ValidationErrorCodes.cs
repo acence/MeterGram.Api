@@ -17,5 +17,6 @@ public static class ValidationErrorCodes
     public const string NotUnique = "NotUniqueValidator";
     public const string TooLong = "TooLongValidator";
     public const string NotAvailable = "NotAvailableValidator";
+    public const string NotValidContent = "NotValidContent";
     #endregion
 }

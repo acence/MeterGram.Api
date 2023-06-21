@@ -9,14 +9,11 @@ namespace MeterGram.Infrastructure.Database.Repositories;
 
 public class ProjectRepository : BaseRepository<Project>, IProjectRepository
 {
-    private readonly IMapper _mapper;
-
-    public ProjectRepository(IDatabaseContext context, IMapper mapper) : base(context)
+    public ProjectRepository(IDatabaseContext context) : base(context)
     {
-        _mapper = mapper;
     }
 
-    public async Task<IList<Project>> GetAllProjectsAsync(bool onlyActive, CancellationToken cancellationToken)
+    public async Task<IList<Project>> GetAllProjectsAsync(bool onlyActive, CancellationToken cancellationToken = default)
     {
         var projects = Entities.AsQueryable();
         if(onlyActive)
@@ -27,12 +24,23 @@ public class ProjectRepository : BaseRepository<Project>, IProjectRepository
         return await projects.ToListAsync(cancellationToken);
     }
 
-    public async Task BulkUpsertWithIdentity(IList<Project> projects)
+    public async Task<Boolean> DoesProjectExistAndIsActive(int projectId, CancellationToken cancellationToken = default)
     {
-        var context = (_context as DatabaseContext);
-        using (var transaction = context.Database.BeginTransaction())
+        var project = await GetByIdAsync(projectId, cancellationToken);
+
+        if(project == null || !project.IsActive)
         {
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Projects ON;");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task BulkUpsertWithIdentity(IList<Project> projects, CancellationToken cancellationToken = default)
+    {
+        var context = (_context as DatabaseContext)!;
+        using (var transaction = await context.Database.BeginTransactionAsync(cancellationToken))
+        {
+            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Projects ON;", cancellationToken);
             foreach(var project in projects)
             {
                 if(!Entities.Any(x => x.Id == project.Id))
@@ -45,9 +53,9 @@ public class ProjectRepository : BaseRepository<Project>, IProjectRepository
                 }
             }
 
-            await context.SaveChangesAsync();
-            context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Projects OFF");
-            await transaction.CommitAsync();
+            await context.SaveChangesAsync(cancellationToken);
+            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Projects OFF", cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
         }
     }
 }

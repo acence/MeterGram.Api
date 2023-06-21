@@ -30,7 +30,7 @@ namespace MeterGram.Infrastructure.ProjectService
             _httpClient.BaseAddress = new Uri(_options.BaseUrl);
         }
 
-        public async Task<IList<Project>> GetProjectsAsync(bool updateProjects, CancellationToken cancellationToken)
+        public async Task<IList<Project>> GetProjectsAsync(Boolean updateProjects, CancellationToken cancellationToken)
         {
             var token = await GetAccessToken(cancellationToken);
 
@@ -66,9 +66,9 @@ namespace MeterGram.Infrastructure.ProjectService
             return result;
         }
 
-        private async Task<string> GetAccessToken(CancellationToken cancellationToken)
+        private async Task<String> GetAccessToken(CancellationToken cancellationToken)
         {
-            var token = _memoryCache.Get<string>("AccessToken");
+            var token = _memoryCache.Get<String>("AccessToken");
             if(string.IsNullOrEmpty(token))
             {
                 var response = await _httpClient.PostAsJsonAsync(_options.AuthEndpoint, new

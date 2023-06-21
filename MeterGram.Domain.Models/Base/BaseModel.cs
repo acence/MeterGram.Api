@@ -14,7 +14,7 @@ public abstract class BaseModel<T>
 /// <summary>
 /// Base model alternative with Id type integer
 /// </summary>
-public abstract class BaseModel : BaseModel<int>
+public abstract class BaseModel : BaseModel<Int32>
 {
 
 }

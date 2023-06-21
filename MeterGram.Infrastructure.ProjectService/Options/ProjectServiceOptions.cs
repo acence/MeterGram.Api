@@ -2,8 +2,8 @@
 
 public class ProjectServiceOptions
 {
-    public string BaseUrl { get; set; } = null!;
-    public string AuthEndpoint { get; set; } = null!;
-    public string CoursesEndpoint { get; set; } = null!;
-    public string AuthSecret { get; set; } = null!;
+    public String BaseUrl { get; set; } = null!;
+    public String AuthEndpoint { get; set; } = null!;
+    public String CoursesEndpoint { get; set; } = null!;
+    public String AuthSecret { get; set; } = null!;
 }

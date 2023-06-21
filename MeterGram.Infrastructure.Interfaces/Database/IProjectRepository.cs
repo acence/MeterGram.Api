@@ -5,7 +5,9 @@ namespace MeterGram.Infrastructure.Interfaces.Database;
 
 public interface IProjectRepository : IBaseRepository<Project>
 {
-    Task<IList<Project>> GetAllProjectsAsync(bool onlyActive, CancellationToken cancellationToken);
+    Task<IList<Project>> GetAllProjectsAsync(bool onlyActive, CancellationToken cancellationToken = default);
 
-    Task BulkUpsertWithIdentity(IList<Project> projects);
+    Task<Boolean> DoesProjectExistAndIsActive(int projectId, CancellationToken cancellationToken = default);
+
+    Task BulkUpsertWithIdentity(IList<Project> projects, CancellationToken cancellationToken = default);
 }
