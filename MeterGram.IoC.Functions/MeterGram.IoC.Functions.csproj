@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MeterGram.Core\MeterGram.Core.csproj" />
+    <ProjectReference Include="..\MeterGram.Infrastructure.CourseService\MeterGram.Infrastructure.CourseService.csproj" />
     <ProjectReference Include="..\MeterGram.Infrastructure.Database\MeterGram.Infrastructure.Database.csproj" />
-    <ProjectReference Include="..\MeterGram.Infrastructure.ProjectService\MeterGram.Infrastructure.ProjectService.csproj" />
   </ItemGroup>
 
 </Project>

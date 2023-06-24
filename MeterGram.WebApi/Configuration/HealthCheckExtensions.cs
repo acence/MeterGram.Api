@@ -11,7 +11,7 @@ public static class HealthCheckExtensions
         services
             .AddHealthChecks()
             .AddSqlServer(configuration.GetConnectionString("AppDatabaseConnection")!, name: "SqlServer")
-            .AddUrlGroup(new Uri(new Uri(configuration.GetValue<string>("ProjectService:BaseUrl")!), "/swagger/index.html"), name: "ProjectService");
+            .AddUrlGroup(new Uri(new Uri(configuration.GetValue<string>("CourseService:BaseUrl")!), "/swagger/index.html"), name: "CourseService");
 
         return services;
     }

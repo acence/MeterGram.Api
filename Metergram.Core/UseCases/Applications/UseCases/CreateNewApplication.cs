@@ -6,24 +6,24 @@ namespace MeterGram.Core.UseCases.Applications.UseCases;
 
 public class CreateNewApplication : IRequestHandler<CreateNewApplication.Command, CompanyApplication>
 {
-    private readonly IProjectRepository _projectRepository;
+    private readonly ICourseRepository _projectRepository;
     private readonly ICompanyApplicationRepository _companyApplicationRepository;
 
-    public CreateNewApplication(IProjectRepository projectRepository, ICompanyApplicationRepository companyApplicationRepository)
+    public CreateNewApplication(ICourseRepository projectRepository, ICompanyApplicationRepository companyApplicationRepository)
     {
         _projectRepository = projectRepository;
         _companyApplicationRepository = companyApplicationRepository;
     }
     public async Task<CompanyApplication> Handle(Command request, CancellationToken cancellationToken)
     {
-        var project = await  _projectRepository.GetByIdAsync(request.ProjectId, cancellationToken);
+        var project = await  _projectRepository.GetByIdAsync(request.CourseId, cancellationToken);
 
         var application = new CompanyApplication
         {
             Name = request.Name,
             Email = request.Email,
             Phone = request.Phone,
-            Project = project!,
+            Course = project!,
             Participants = request.Participants.Select(x => new Participant
             {
                 Name = request.Name,
@@ -43,7 +43,7 @@ public class CreateNewApplication : IRequestHandler<CreateNewApplication.Command
         public String Phone { get; set; } = null!;
         public String Email { get; set; } = null!;
 
-        public Int32 ProjectId { get; set; }
+        public Int32 CourseId { get; set; }
 
         public IList<ParticipantCommand> Participants { get; set; }
     }

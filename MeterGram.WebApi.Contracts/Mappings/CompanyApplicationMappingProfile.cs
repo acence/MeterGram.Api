@@ -17,6 +17,6 @@ public class CompanyApplicationMappingProfile : Profile
 
         CreateMap<CompanyApplication, CompanyApplicationResponse>();
         CreateMap<Participant, CompanyApplicationResponseParticipant>();
-        CreateMap<Project, CompanyApplicationResponseProject>();
+        CreateMap<Course, CompanyApplicationResponseCourse>();
     }
 }

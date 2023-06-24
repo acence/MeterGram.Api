@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeterGram.Infrastructure.Database.Repositories;
 
-public class ProjectRepository : BaseRepository<Project>, IProjectRepository
+public class CourseRepository : BaseRepository<Course>, ICourseRepository
 {
-    public ProjectRepository(IDatabaseContext context) : base(context)
+    public CourseRepository(IDatabaseContext context) : base(context)
     {
     }
 
-    public async Task<IList<Project>> GetAllProjectsAsync(bool onlyActive, CancellationToken cancellationToken = default)
+    public async Task<IList<Course>> GetAllCourseAsync(bool onlyActive, CancellationToken cancellationToken = default)
     {
         var projects = Entities.AsQueryable();
         if(onlyActive)
@@ -24,7 +24,7 @@ public class ProjectRepository : BaseRepository<Project>, IProjectRepository
         return await projects.ToListAsync(cancellationToken);
     }
 
-    public async Task<Boolean> DoesProjectExistAndIsActive(int projectId, CancellationToken cancellationToken = default)
+    public async Task<Boolean> DoesCourseExistAndIsActive(int projectId, CancellationToken cancellationToken = default)
     {
         var project = await GetByIdAsync(projectId, cancellationToken);
 
@@ -35,12 +35,12 @@ public class ProjectRepository : BaseRepository<Project>, IProjectRepository
         return true;
     }
 
-    public async Task BulkUpsertWithIdentity(IList<Project> projects, CancellationToken cancellationToken = default)
+    public async Task BulkUpsertWithIdentity(IList<Course> projects, CancellationToken cancellationToken = default)
     {
         var context = (_context as DatabaseContext)!;
         using (var transaction = await context.Database.BeginTransactionAsync(cancellationToken))
         {
-            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Projects ON;", cancellationToken);
+            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Courses ON;", cancellationToken);
             foreach(var project in projects)
             {
                 if(!Entities.Any(x => x.Id == project.Id))
@@ -54,7 +54,7 @@ public class ProjectRepository : BaseRepository<Project>, IProjectRepository
             }
 
             await context.SaveChangesAsync(cancellationToken);
-            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Projects OFF", cancellationToken);
+            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Courses OFF", cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         }
     }

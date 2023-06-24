@@ -7,6 +7,6 @@ public class CompanyApplicationResponse
     public String Phone { get; set; } = null!;
     public String Email { get; set; } = null!;
 
-    public CompanyApplicationResponseProject Project { get; set; } = default!;
+    public CompanyApplicationResponseCourse Course { get; set; } = default!;
     public IList<CompanyApplicationResponseParticipant> Participants { get; set; } = default!;
 }

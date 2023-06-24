@@ -8,6 +8,6 @@ public class CompanyApplication : BaseModel
     public String Phone { get; set; } = null!;
     public String Email { get; set; } = null!;
 
-    public Project Project { get; set; } = null!;
+    public Course Course { get; set; } = null!;
     public ICollection<Participant> Participants { get; set; } = null!;
 }

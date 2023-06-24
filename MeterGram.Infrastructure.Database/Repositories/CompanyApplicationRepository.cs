@@ -24,7 +24,7 @@ public class CompanyApplicationRepository : BaseRepository<CompanyApplication>, 
 
         if (pageSize > 0) query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-        query = query.Include(x => x.Project);
+        query = query.Include(x => x.Course);
         query = query.Include(x => x.Participants);
 
         return (count, await query.ToListAsync(cancellationToken));
@@ -42,7 +42,7 @@ public class CompanyApplicationRepository : BaseRepository<CompanyApplication>, 
 
         if (pageSize > 0) query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-        query = query.Include(x => x.Project);
+        query = query.Include(x => x.Course);
         query = query.Include(x => x.Participants);
 
         return (count, await query.ToListAsync(cancellationToken));

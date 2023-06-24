@@ -11,7 +11,7 @@ public class IsCreateNewApplicationValid : AbstractValidator<CreateNewApplicatio
 {
     public static readonly Regex PhoneRegex = new Regex("^[ \\+()\\-.\\d]+$", RegexOptions.Compiled);
 
-    public IsCreateNewApplicationValid(IProjectRepository projectRepository)
+    public IsCreateNewApplicationValid(ICourseRepository projectRepository)
     {
         RuleFor(x => x.Name)
             .Cascade(CascadeMode.Continue)
@@ -32,11 +32,11 @@ public class IsCreateNewApplicationValid : AbstractValidator<CreateNewApplicatio
             .MaximumLength(100)
             .EmailAddress(EmailValidationMode.AspNetCoreCompatible);
 
-        RuleFor(x => x.ProjectId)
+        RuleFor(x => x.CourseId)
             .Cascade(CascadeMode.Continue)
             .GreaterThan(0)
-            .MustAsync(projectRepository.DoesProjectExistAndIsActive)
-            .WithMessage(x => $"Project with Id: [{x.ProjectId}] is not present in system or inactive")
+            .MustAsync(projectRepository.DoesCourseExistAndIsActive)
+            .WithMessage(x => $"Course with Id: [{x.CourseId}] is not present in system or inactive")
             .WithErrorCode(ValidationErrorCodes.NotAvailable);
 
         RuleFor(x => x.Participants)

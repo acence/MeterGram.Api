@@ -6,7 +6,7 @@ public class CompanyApplicationCreateRequest
     public String Phone { get; set; } = null!;
     public String Email { get; set; } = null!;
 
-    public Int32 ProjectId { get; set; }
+    public Int32 CourseId { get; set; }
 
     public IList<CompanyApplicationCreateRequestParticipant> Participants { get; set; } = default!;
 }

@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MeterGram.Infrastructure.Database.Configuration.Models;
 
-public class ProjectEntityConfiguration : IEntityTypeConfiguration<Project>
+public class CourseEntityConfiguration : IEntityTypeConfiguration<Course>
 {
-    public void Configure(EntityTypeBuilder<Project> builder)
+    public void Configure(EntityTypeBuilder<Course> builder)
     {
-        builder.ToTable("Projects");
+        builder.ToTable("Courses");
 
         builder
             .HasKey(x => x.Id);
 
         builder
-            .Property(x => x.CourseName)
+            .Property(x => x.Name)
             .HasMaxLength(250)
             .IsRequired();
 
@@ -28,6 +28,6 @@ public class ProjectEntityConfiguration : IEntityTypeConfiguration<Project>
 
         builder
             .HasMany(x => x.CompanyApplications)
-            .WithOne(x => x.Project);
+            .WithOne(x => x.Course);
     }
 }
