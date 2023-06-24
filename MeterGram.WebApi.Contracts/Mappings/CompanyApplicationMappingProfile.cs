@@ -10,6 +10,8 @@ namespace MeterGram.WebApi.Contracts.Mappings
     {
         public CompanyApplicationMappingProfile()
         {
+            CreateMap<CompanyApplicationGetRequest, GetAllApplications.Query>();
+            CreateMap<CompanyApplicationGetForParticipantRequest, GetAllApplicationsForParticipant.Query>();
             CreateMap<CompanyApplicationCreateRequest, CreateNewApplication.Command>();
             CreateMap<CompanyApplicationCreateRequestParticipant, CreateNewApplication.ParticipantCommand>();
 
