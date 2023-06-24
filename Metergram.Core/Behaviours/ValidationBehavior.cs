@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using Metergram.Core.Extensions;
+using MeterGram.Core.Extensions;
 
 namespace MeterGram.Core.Behaviours;
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Metergram.Core.Models;
+using MeterGram.Core.Models;
 using MeterGram.WebApi.Contracts.Responses;
 
 namespace MeterGram.WebApi.Contracts.Mappings;

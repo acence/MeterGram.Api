@@ -3,6 +3,7 @@ using MeterGram.Domain.Models;
 using MeterGram.Infrastructure.Interfaces.ProjectService;
 using MeterGram.Infrastructure.ProjectService.Models;
 using MeterGram.Infrastructure.ProjectService.Options;
+using MeterGram.Infrastructure.ProjectService.Services.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
@@ -15,19 +16,18 @@ namespace MeterGram.Infrastructure.ProjectService;
 public class ProjectExternalService : IProjectExternalService
 {
     private readonly ProjectServiceOptions _options;
+    private readonly ICourseHttpService _courseService;
     private readonly IMemoryCache _memoryCache;
     private readonly IMapper _mapper;
-    private readonly HttpClient _httpClient;
 
     private readonly Regex nextUrlRegex = new Regex("<(.+)>");
 
-    public ProjectExternalService(IOptions<ProjectServiceOptions> options, IMemoryCache memoryCache, IMapper mapper)
+    public ProjectExternalService(ICourseHttpService courseService, IOptions<ProjectServiceOptions> options, IMemoryCache memoryCache, IMapper mapper)
     {
         _options = options.Value;
+        _courseService = courseService;
         _memoryCache = memoryCache;
         _mapper = mapper;
-        _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri(_options.BaseUrl);
     }
 
     public async Task<IList<Project>> GetProjectsAsync(Boolean updateProjects, CancellationToken cancellationToken)
@@ -39,14 +39,7 @@ public class ProjectExternalService : IProjectExternalService
 
         while(true)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            var response = await _httpClient.SendAsync(request, cancellationToken);
-
-            response.EnsureSuccessStatusCode();
-
-            var responseObject = JsonSerializer.Deserialize<ProjectListWrapperResponseModel>(await response.Content.ReadAsStringAsync());
+            var responseObject = await _courseService.GetProjectsAsync(uri, token, cancellationToken);
 
             foreach(var contract in responseObject.Data)
             {
@@ -55,6 +48,7 @@ public class ProjectExternalService : IProjectExternalService
             if(!String.IsNullOrEmpty(responseObject.NextPageLink))
             {
                 var link = nextUrlRegex.Match(responseObject.NextPageLink).Groups[1].Value;
+                link += (link.Contains("?") ? "&" : "?") + $"isDataUpdated={JsonSerializer.Serialize(updateProjects)}";
                 uri = new Uri(link);
             }
             else
@@ -71,14 +65,7 @@ public class ProjectExternalService : IProjectExternalService
         var token = _memoryCache.Get<String>("AccessToken");
         if(string.IsNullOrEmpty(token))
         {
-            var response = await _httpClient.PostAsJsonAsync(_options.AuthEndpoint, new
-            {
-                apiKey = _options.AuthSecret
-            }, cancellationToken);
-
-            response.EnsureSuccessStatusCode();
-
-            token = JsonSerializer.Deserialize<TokenResponseWrapper>(await response.Content.ReadAsStringAsync(cancellationToken))!.Data.AccessToken;
+            token = await _courseService.GetTokenAsync(cancellationToken);
         }
 
         _memoryCache.Set("AccessToken", token, TimeSpan.FromMinutes(20).Add(-TimeSpan.FromSeconds(30)));

@@ -26,7 +26,7 @@ public static class SwaggerConfigurationExtensions
         {
             foreach (var description in descriptionProvider.ApiVersionDescriptions.Select(x => x.GroupName))
             {
-                options.SwaggerEndpoint($"/swagger/{description}/swagger.json", $"Metergram Course WebApi {description}");
+                options.SwaggerEndpoint($"/swagger/{description}/swagger.json", $"MeterGram Course WebApi {description}");
             }
         });
 

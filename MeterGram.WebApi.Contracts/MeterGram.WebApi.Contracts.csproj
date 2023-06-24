@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Metergram.Core\MeterGram.Core.csproj" />
+    <ProjectReference Include="..\MeterGram.Core\MeterGram.Core.csproj" />
     <ProjectReference Include="..\MeterGram.Domain.Models\MeterGram.Domain.Models.csproj" />
   </ItemGroup>
 

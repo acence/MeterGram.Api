@@ -6,25 +6,24 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace MeterGram.ProjectSyncFunction'
+namespace MeterGram.ProjectSyncFunction;
+
+public class ProjectSync
 {
-    public class ProjectSync
+    private readonly IMediator _mediator;
+
+    public ProjectSync(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
+    [FunctionName("SynchronizeProjects")]
+    public async Task Run([TimerTrigger("* * 0 * * *")]TimerInfo myTimer, ILogger log)
+    {
+        log.LogInformation($"Project synchronization started at: {DateTime.Now}");
 
-        public ProjectSync(IMediator mediator)
+        await _mediator.Send(new SynchronizeProjects.Query
         {
-            _mediator = mediator;
-        }
-        [FunctionName("SynchronizeProjects")]
-        public async Task Run([TimerTrigger("* * 0 * * *")]TimerInfo myTimer, ILogger log)
-        {
-            log.LogInformation($"Project synchronization started at: {DateTime.Now}");
-
-            await _mediator.Send(new SynchronizeProjects.Query
-            {
-                ShouldGetUpdatedData = true,
-            }).ConfigureAwait(false);
-        }
+            ShouldGetUpdatedData = true,
+        }).ConfigureAwait(false);
     }
 }

@@ -3,7 +3,7 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using MediatR;
 using AutoMapper;
-using Metergram.Core.Behaviours;
+using MeterGram.Core.Behaviours;
 using MeterGram.WebApi.Contracts.Responses;
 
 namespace MeterGram.WebApi.Extensions;
