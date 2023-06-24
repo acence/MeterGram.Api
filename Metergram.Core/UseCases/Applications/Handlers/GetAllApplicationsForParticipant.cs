@@ -3,13 +3,15 @@ using MeterGram.Core.Models;
 using MeterGram.Domain.Models;
 using MeterGram.Infrastructure.Interfaces.Database;
 
-namespace MeterGram.Core.UseCases.Applications.UseCases;
+namespace MeterGram.Core.UseCases.Applications.Handlers;
 
 public class GetAllApplicationsForParticipant : IRequestHandler<GetAllApplicationsForParticipant.Query, PagedResult<CompanyApplication>>
 {
     private readonly ICompanyApplicationRepository _companyApplicationRepository;
     public GetAllApplicationsForParticipant(ICompanyApplicationRepository companyApplicationRepository)
     {
+        ArgumentNullException.ThrowIfNull(companyApplicationRepository);
+
         _companyApplicationRepository = companyApplicationRepository;
     }
     public async Task<PagedResult<CompanyApplication>> Handle(Query request, CancellationToken cancellationToken)

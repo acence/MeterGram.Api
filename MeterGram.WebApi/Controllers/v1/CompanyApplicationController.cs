@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using MeterGram.Core.UseCases.Applications.UseCases;
+using MeterGram.Core.UseCases.Applications.Handlers;
 using MeterGram.WebApi.Contracts.Requests.CompanyApplications;
 using MeterGram.WebApi.Contracts.Responses;
 using MeterGram.WebApi.Contracts.Responses.CompanyApplications;

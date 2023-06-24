@@ -21,7 +21,7 @@ public class CourseSync
     {
         log.LogInformation($"Course synchronization started at: {DateTime.Now}");
 
-        await _mediator.Send(new SynchronizeCourses.Query
+        await _mediator.Send(new SynchronizeCourses.Command
         {
             ShouldGetUpdatedData = true,
         }).ConfigureAwait(false);

@@ -10,6 +10,8 @@ public class GetAllCourses : IRequestHandler<GetAllCourses.Query, IList<Course>>
 
     public GetAllCourses(ICourseRepository projectRepository)
     {
+        ArgumentNullException.ThrowIfNull(projectRepository);
+
         _projectRepository = projectRepository;
     }
     public async Task<IList<Course>> Handle(Query request, CancellationToken cancellationToken)

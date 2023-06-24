@@ -3,7 +3,7 @@ using MeterGram.Core.Models;
 using MeterGram.Domain.Models;
 using MeterGram.Infrastructure.Interfaces.Database;
 
-namespace MeterGram.Core.UseCases.Applications.UseCases;
+namespace MeterGram.Core.UseCases.Applications.Handlers;
 
 public class GetAllApplications : IRequestHandler<GetAllApplications.Query, PagedResult<CompanyApplication>>
 {
@@ -11,6 +11,8 @@ public class GetAllApplications : IRequestHandler<GetAllApplications.Query, Page
 
     public GetAllApplications(ICompanyApplicationRepository companyApplicationRepository)
     {
+        ArgumentNullException.ThrowIfNull(companyApplicationRepository);
+
         _companyApplicationRepository = companyApplicationRepository;
     }
     public async Task<PagedResult<CompanyApplication>> Handle(Query request, CancellationToken cancellationToken)

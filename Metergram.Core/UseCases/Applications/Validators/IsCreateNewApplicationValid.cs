@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 using MeterGram.Core.Behaviours;
-using MeterGram.Core.UseCases.Applications.UseCases;
+using MeterGram.Core.UseCases.Applications.Handlers;
 using MeterGram.Infrastructure.Interfaces.Database;
 using System.Text.RegularExpressions;
 
@@ -22,7 +22,7 @@ public class IsCreateNewApplicationValid : AbstractValidator<CreateNewApplicatio
             .Cascade(CascadeMode.Continue)
             .NotEmpty()
             .MaximumLength(50)
-            .Must(PhoneRegex.IsMatch)
+            .Must(x => !string.IsNullOrEmpty(x) && PhoneRegex.IsMatch(x))
             .WithMessage("Phone can only contain numbers, and the following signs: +, -, (, ) or empty spaces")
             .WithErrorCode(ValidationErrorCodes.NotValidContent);
 

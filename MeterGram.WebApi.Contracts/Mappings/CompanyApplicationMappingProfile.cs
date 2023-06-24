@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MeterGram.Core.UseCases.Applications.UseCases;
+using MeterGram.Core.UseCases.Applications.Handlers;
 using MeterGram.Domain.Models;
 using MeterGram.WebApi.Contracts.Requests.CompanyApplications;
 using MeterGram.WebApi.Contracts.Responses.CompanyApplications;

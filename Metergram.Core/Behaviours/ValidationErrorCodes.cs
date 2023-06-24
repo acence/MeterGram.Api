@@ -2,21 +2,22 @@
 
 public static class ValidationErrorCodes
 {
-    public const string GreaterThanOrEqualTo = "GreaterThanOrEqualValidator";
-    public const string NotEqualTo = "NotEqualValidator";
-    public const string GreaterThan = "GreaterThanValidator";
-    public const string LessThan = "LessThanValidator";
-    public const string MaximumLength = "MaximumLengthValidator";
-    public const string Predicate = "PredicateValidator";
-    public const string AsyncPredicate = "AsyncPredicateValidator";
-    public const string NotEmpty = "NotEmptyValidator";
-    public const string Enum = "EnumValidator";
+    public const String GreaterThanOrEqualTo = "GreaterThanOrEqualValidator";
+    public const String NotEqualTo = "NotEqualValidator";
+    public const String GreaterThan = "GreaterThanValidator";
+    public const String LessThan = "LessThanValidator";
+    public const String MaximumLength = "MaximumLengthValidator";
+    public const String Predicate = "PredicateValidator";
+    public const String AsyncPredicate = "AsyncPredicateValidator";
+    public const String NotEmpty = "NotEmptyValidator";
+    public const String Enum = "EnumValidator";
+    public const String Email = "EmailValidator";
 
     #region Custom error codes
-    public const string NotFound = "NotFoundValidator";
-    public const string NotUnique = "NotUniqueValidator";
-    public const string TooLong = "TooLongValidator";
-    public const string NotAvailable = "NotAvailableValidator";
-    public const string NotValidContent = "NotValidContent";
+    public const String NotFound = "NotFoundValidator";
+    public const String NotUnique = "NotUniqueValidator";
+    public const String TooLong = "TooLongValidator";
+    public const String NotAvailable = "NotAvailableValidator";
+    public const String NotValidContent = "NotValidContent";
     #endregion
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MeterGram.IoC.Functions;
 using System;
+using System.Collections.Generic;
 
 [assembly: FunctionsStartup(typeof(MeterGram.CourseSyncFunction.Startup))]
 namespace MeterGram.CourseSyncFunction;
@@ -23,6 +24,21 @@ public class Startup : FunctionsStartup
             .AddJsonFile($"appSettings.Development.json", optional: true, reloadOnChange: false)
             .AddEnvironmentVariables()
             .Build();
+
+        var useAzureAppConfig = config.GetValue<Boolean>("FeatureFlags:UseAzureAppConfig");
+        if (useAzureAppConfig)
+        {
+            var providers = new List<IConfigurationProvider>();
+            providers.AddRange(config.Providers);
+
+            string connectionString = config.GetConnectionString("AzureAppConfigConnection");
+            var azureConfig = new ConfigurationBuilder()
+                .AddAzureAppConfiguration(connectionString)
+                .Build();
+            providers.AddRange(azureConfig.Providers);
+
+            config = new ConfigurationRoot(providers);
+        }
 
         builder.Services.AddFunctionDepenDencies(config);
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

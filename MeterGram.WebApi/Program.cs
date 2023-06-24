@@ -7,6 +7,13 @@ using MeterGram.IoC.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var useAzureAppConfig = builder.Configuration.GetValue<Boolean>("FeatureFlags:UseAzureAppConfig");
+if (useAzureAppConfig)
+{
+    string connectionString = builder.Configuration.GetConnectionString("AzureAppConfigConnection");
+    builder.Configuration.AddAzureAppConfiguration(connectionString);
+}
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

@@ -41,8 +41,8 @@ public class CoursesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ServerErrorResponse))]
     public async Task<IActionResult> Synchronize([FromQuery] Boolean shouldGetUpdatedData)
     {
-        var query = new SynchronizeCourses.Query { ShouldGetUpdatedData = shouldGetUpdatedData };
+        var command = new SynchronizeCourses.Command { ShouldGetUpdatedData = shouldGetUpdatedData };
 
-        return await _mediator.SendAsync(query);
+        return await _mediator.SendAsync(command);
     }
 }

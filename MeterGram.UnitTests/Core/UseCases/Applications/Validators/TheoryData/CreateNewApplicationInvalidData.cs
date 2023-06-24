@@ -1,0 +1,37 @@
+﻿using MeterGram.Core.Behaviours;
+using MeterGram.Core.UseCases.Applications.Handlers;
+using System.Numerics;
+
+namespace MeterGram.UnitTests.Core.UseCases.Applications.Validators.TheoryData
+{
+    public class CreateNewApplicationInvalidData : TheoryData<CreateNewApplication.Command, IList<(string property, string errorCode)>>
+    {
+        public CreateNewApplicationInvalidData()
+        {
+            Add(new CreateNewApplication.Command { Name = null!, Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Name", ValidationErrorCodes.NotEmpty) });
+            Add(new CreateNewApplication.Command { Name = String.Empty, Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Name", ValidationErrorCodes.NotEmpty) });
+            Add(new CreateNewApplication.Command { Name = new string('a', 500), Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Name", ValidationErrorCodes.MaximumLength) });
+            
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = null!, Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Email", ValidationErrorCodes.NotEmpty) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = String.Empty, Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Email", ValidationErrorCodes.NotEmpty), ("Email", ValidationErrorCodes.Email) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = new string('a', 500), Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Email", ValidationErrorCodes.MaximumLength), ("Email", ValidationErrorCodes.Email) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Email", ValidationErrorCodes.Email) });
+            
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = null!, CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Phone", ValidationErrorCodes.NotEmpty), ("Phone", ValidationErrorCodes.NotValidContent) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = string.Empty, CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Phone", ValidationErrorCodes.NotEmpty), ("Phone", ValidationErrorCodes.NotValidContent) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "asd", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Phone", ValidationErrorCodes.NotValidContent) });
+            
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 2, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("CourseId", ValidationErrorCodes.NotAvailable) });
+            
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = null!, Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Participants[0].Name", ValidationErrorCodes.NotEmpty) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = String.Empty, Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Participants[0].Name", ValidationErrorCodes.NotEmpty) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = new string('A', 500), Email = "a@a.com", Phone = "123" } } }, new List<(string, string)> { ("Participants[0].Name", ValidationErrorCodes.MaximumLength) });
+
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = new string('A', 500), Phone = "123" } } }, new List<(string, string)> { ("Participants[0].Email", ValidationErrorCodes.MaximumLength), ("Participants[0].Email", ValidationErrorCodes.Email) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a", Phone = "123" } } }, new List<(string, string)> { ("Participants[0].Email", ValidationErrorCodes.Email) });
+
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = new string('1', 100) } } }, new List<(string, string)> { ("Participants[0].Phone", ValidationErrorCodes.MaximumLength) });
+            Add(new CreateNewApplication.Command { Name = "Test Name", Email = "a@a.com", Phone = "123", CourseId = 1, Participants = new List<CreateNewApplication.ParticipantCommand> { new CreateNewApplication.ParticipantCommand { Name = "Test Name", Email = "a@a.com", Phone = "asd" } } }, new List<(string, string)> { ("Participants[0].Phone", ValidationErrorCodes.NotValidContent) });
+        }
+    }
+}

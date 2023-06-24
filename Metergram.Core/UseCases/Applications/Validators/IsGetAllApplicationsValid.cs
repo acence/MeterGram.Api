@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 using MeterGram.Core.Behaviours;
-using MeterGram.Core.UseCases.Applications.UseCases;
+using MeterGram.Core.UseCases.Applications.Handlers;
 
 namespace MeterGram.Core.UseCases.Applications.Validators;
 
