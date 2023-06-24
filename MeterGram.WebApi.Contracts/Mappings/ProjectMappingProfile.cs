@@ -2,13 +2,12 @@
 using MeterGram.Domain.Models;
 using MeterGram.WebApi.Contracts.Responses.Project;
 
-namespace MeterGram.WebApi.Contracts.Mappings
+namespace MeterGram.WebApi.Contracts.Mappings;
+
+public class ProjectMappingProfile : Profile
 {
-    public class ProjectMappingProfile : Profile
+    public ProjectMappingProfile()
     {
-        public ProjectMappingProfile()
-        {
-            CreateMap<Project, ProjectResponse>();
-        }
+        CreateMap<Project, ProjectResponse>();
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace FitnessApp.Web.Api.Configuration.Options
+﻿namespace FitnessApp.Web.Api.Configuration.Options;
+
+public class HealthCheckOptions
 {
-	public class HealthCheckOptions
-	{
-		public string Endpoint { get; set; } = null!;
-	}
+	public string Endpoint { get; set; } = null!;
 }

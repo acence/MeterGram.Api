@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeterGram.WebApi.Contracts"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeterGram.Infrastructure.Interfaces", "MeterGram.Infrastructure.Interfaces\MeterGram.Infrastructure.Interfaces.csproj", "{3C8BCE31-3AC1-4EAA-BE1D-171C14540164}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metergram.Core", "Metergram.Core\Metergram.Core.csproj", "{633FBA8C-0A52-4C8E-98E1-4033FCBF941A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeterGram.Core", "Metergram.Core\MeterGram.Core.csproj", "{633FBA8C-0A52-4C8E-98E1-4033FCBF941A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeterGram.ProjectSyncFunction", "MeterGram.ProjectSyncFunction\MeterGram.ProjectSyncFunction.csproj", "{99670106-F60E-4BF0-A344-8B5A7728C790}"
 EndProject

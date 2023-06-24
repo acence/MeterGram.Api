@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MeterGram.Infrastructure.ProjectService.Models
+namespace MeterGram.Infrastructure.ProjectService.Models;
+
+public class TokenResponseWrapper
 {
-    public class TokenResponseWrapper
-    {
-        [JsonPropertyName("data")]
-        public TokenData Data { get; set; }
-    }
+    [JsonPropertyName("data")]
+    public TokenData Data { get; set; }
 }

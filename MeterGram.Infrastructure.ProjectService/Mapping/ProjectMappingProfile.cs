@@ -2,13 +2,12 @@
 using MeterGram.Domain.Models;
 using MeterGram.Infrastructure.ProjectService.Models;
 
-namespace MeterGram.Infrastructure.ProjectService.Mapping
+namespace MeterGram.Infrastructure.ProjectService.Mapping;
+
+public class ProjectMappingProfile : Profile
 {
-    public class ProjectMappingProfile : Profile
+    public ProjectMappingProfile()
     {
-        public ProjectMappingProfile()
-        {
-            CreateMap<ProjectResponseModel, Project>();
-        }
+        CreateMap<ProjectResponseModel, Project>();
     }
 }

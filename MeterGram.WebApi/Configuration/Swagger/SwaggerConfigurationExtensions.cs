@@ -9,7 +9,6 @@ public static class SwaggerConfigurationExtensions
 {
     public static IServiceCollection AddConfiguredSwagger(this IServiceCollection services)
     {
-
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddSwaggerGen(options =>
         {
@@ -27,7 +26,7 @@ public static class SwaggerConfigurationExtensions
         {
             foreach (var description in descriptionProvider.ApiVersionDescriptions.Select(x => x.GroupName))
             {
-                options.SwaggerEndpoint($"/swagger/{description}/swagger.json", $"Car Rent WebApi {description}");
+                options.SwaggerEndpoint($"/swagger/{description}/swagger.json", $"Metergram Course WebApi {description}");
             }
         });
 

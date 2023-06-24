@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MeterGram.Infrastructure.ProjectService.Models
+namespace MeterGram.Infrastructure.ProjectService.Models;
+
+public class TokenData
 {
-    public class TokenData
-    {
-        [JsonPropertyName("accessToken")]
-        public String AccessToken { get; set; } = null;
-    }
+    [JsonPropertyName("accessToken")]
+    public String AccessToken { get; set; } = null;
 }

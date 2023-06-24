@@ -20,8 +20,4 @@
     <ProjectReference Include="..\MeterGram.Infrastructure.Interfaces\MeterGram.Infrastructure.Interfaces.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\Base\" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Metergram.Core.Behaviours;
+﻿namespace MeterGram.Core.Behaviours;
 
 public static class ValidationErrorCodes
 {

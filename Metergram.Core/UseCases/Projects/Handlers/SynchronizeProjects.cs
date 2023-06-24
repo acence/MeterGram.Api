@@ -2,7 +2,7 @@
 using MeterGram.Infrastructure.Interfaces.Database;
 using MeterGram.Infrastructure.Interfaces.ProjectService;
 
-namespace Metergram.Core.UseCases.Projects.Handlers
+namespace MeterGram.Core.UseCases.Projects.Handlers
 {
     public class SynchronizeProjects : IRequestHandler<SynchronizeProjects.Query>
     {

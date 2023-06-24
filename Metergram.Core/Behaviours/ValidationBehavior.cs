@@ -2,7 +2,7 @@
 using MediatR;
 using Metergram.Core.Extensions;
 
-namespace Metergram.Core.Behaviours;
+namespace MeterGram.Core.Behaviours;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

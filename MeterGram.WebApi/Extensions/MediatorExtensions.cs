@@ -6,85 +6,84 @@ using AutoMapper;
 using Metergram.Core.Behaviours;
 using MeterGram.WebApi.Contracts.Responses;
 
-namespace MeterGram.WebApi.Extensions
+namespace MeterGram.WebApi.Extensions;
+
+public static class MediatorExtensions
 {
-    public static class MediatorExtensions
+    public static async Task<IActionResult> SendAndProcessResponseAsync<TRequest, TResponse>(this IMediator mediator, IMapper mapper, TRequest request)
     {
-        public static async Task<IActionResult> SendAndProcessResponseAsync<TRequest, TResponse>(this IMediator mediator, IMapper mapper, TRequest request)
+        try
         {
-            try
+            if (request != null)
             {
-                if (request != null)
-                {
-                    var result = await mediator.Send(request);
-                    return new OkObjectResult(mapper.Map<TResponse>(result));
-                }
-                return new ObjectResult(new ServerErrorResponse { Message = $"Sent null request of type {typeof(TRequest).Name}" })
-                {
-                    StatusCode = StatusCodes.Status500InternalServerError
-                };
+                var result = await mediator.Send(request);
+                return new OkObjectResult(mapper.Map<TResponse>(result));
             }
-            catch (ValidationException validationEx)
+            return new ObjectResult(new ServerErrorResponse { Message = $"Sent null request of type {typeof(TRequest).Name}" })
             {
-                if (validationEx.Errors.All(x => x.ErrorCode == ValidationErrorCodes.NotFound))
-                {
-                    return new NotFoundObjectResult(MapErrors(validationEx));
-                }
-                else
-                {
-                    return new BadRequestObjectResult(MapErrors(validationEx));
-                }
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+        }
+        catch (ValidationException validationEx)
+        {
+            if (validationEx.Errors.All(x => x.ErrorCode == ValidationErrorCodes.NotFound))
+            {
+                return new NotFoundObjectResult(MapErrors(validationEx));
             }
-            catch (Exception ex)
+            else
             {
-                return new ObjectResult(new ServerErrorResponse { Message = ex.Message })
-                {
-                    StatusCode = StatusCodes.Status500InternalServerError
-                };
+                return new BadRequestObjectResult(MapErrors(validationEx));
             }
         }
+        catch (Exception ex)
+        {
+            return new ObjectResult(new ServerErrorResponse { Message = ex.Message })
+            {
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+        }
+    }
 
-        public static async Task<IActionResult> SendAsync<TRequest>(this IMediator mediator, TRequest request)
+    public static async Task<IActionResult> SendAsync<TRequest>(this IMediator mediator, TRequest request)
+    {
+        try
         {
-            try
+            if (request != null)
             {
-                if (request != null)
-                {
-                    await mediator.Send(request);
-                    return new OkResult();
-                }
-                return new ObjectResult(new ServerErrorResponse { Message = $"Sent null request of type {typeof(TRequest).Name}" })
-                {
-                    StatusCode = StatusCodes.Status500InternalServerError
-                };
+                await mediator.Send(request);
+                return new OkResult();
             }
-            catch (ValidationException validationEx)
+            return new ObjectResult(new ServerErrorResponse { Message = $"Sent null request of type {typeof(TRequest).Name}" })
             {
-                if (validationEx.Errors.All(x => x.ErrorCode == ValidationErrorCodes.NotFound))
-                {
-                    return new NotFoundObjectResult(MapErrors(validationEx));
-                }
-                else
-                {
-                    return new BadRequestObjectResult(MapErrors(validationEx));
-                }
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+        }
+        catch (ValidationException validationEx)
+        {
+            if (validationEx.Errors.All(x => x.ErrorCode == ValidationErrorCodes.NotFound))
+            {
+                return new NotFoundObjectResult(MapErrors(validationEx));
             }
-            catch (Exception ex)
+            else
             {
-                return new ObjectResult(new ServerErrorResponse { Message = ex.Message })
-                {
-                    StatusCode = StatusCodes.Status500InternalServerError
-                };
+                return new BadRequestObjectResult(MapErrors(validationEx));
             }
         }
+        catch (Exception ex)
+        {
+            return new ObjectResult(new ServerErrorResponse { Message = ex.Message })
+            {
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+        }
+    }
 
-        private static IEnumerable<ValidationErrorResponse> MapErrors(ValidationException validationEx)
+    private static IEnumerable<ValidationErrorResponse> MapErrors(ValidationException validationEx)
+    {
+        return validationEx.Errors.Select(x => new ValidationErrorResponse
         {
-            return validationEx.Errors.Select(x => new ValidationErrorResponse
-            {
-                Property = x.PropertyName,
-                Message = x.ErrorMessage
-            });
-        }
+            Property = x.PropertyName,
+            Message = x.ErrorMessage
+        });
     }
 }

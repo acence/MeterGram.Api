@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
-using Metergram.Core.UseCases.Projects.Handlers;
+using MeterGram.Core.UseCases.Projects.Handlers;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace MeterGram.ProjectSyncFunction
+namespace MeterGram.ProjectSyncFunction'
 {
     public class ProjectSync
     {

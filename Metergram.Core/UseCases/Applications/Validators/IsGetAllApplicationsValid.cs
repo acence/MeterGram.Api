@@ -5,14 +5,13 @@ using Metergram.Core.UseCases.Applications.UseCases;
 
 namespace MeterGram.Core.UseCases.Applications.Validators;
 
-public class IsCreateNewApplicationParticipantsValid : AbstractValidator<CreateNewApplication.ParticipantCommand>
+public class IsGetAllApplicationsValid : AbstractValidator<GetAllApplications.Query>
 {
-    public IsCreateNewApplicationParticipantsValid()
+    public IsGetAllApplicationsValid()
     {
         RuleFor(x => x.Name)
-            .Cascade(CascadeMode.Continue)
-            .NotEmpty()
-            .MaximumLength(250);
+           .Cascade(CascadeMode.Continue)
+           .MaximumLength(250);
 
         RuleFor(x => x.Phone)
             .Cascade(CascadeMode.Continue)
@@ -25,5 +24,13 @@ public class IsCreateNewApplicationParticipantsValid : AbstractValidator<CreateN
             .Cascade(CascadeMode.Continue)
             .MaximumLength(100)
             .EmailAddress(EmailValidationMode.AspNetCoreCompatible);
+
+        RuleFor(x => x.PageNumber)
+            .Cascade(CascadeMode.Continue)
+            .GreaterThan(0);
+
+        RuleFor(x => x.PageSize)
+            .Cascade(CascadeMode.Continue)
+            .GreaterThanOrEqualTo(0);
     }
 }

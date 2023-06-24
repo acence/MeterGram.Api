@@ -2,7 +2,7 @@
 using MeterGram.Domain.Models;
 using MeterGram.Infrastructure.Interfaces.Database;
 
-namespace Metergram.Core.UseCases.Projects.Handlers;
+namespace MeterGram.Core.UseCases.Projects.Handlers;
 
 public class GetAllProjects : IRequestHandler<GetAllProjects.Query, IList<Project>>
 {

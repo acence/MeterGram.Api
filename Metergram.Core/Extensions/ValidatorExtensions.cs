@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Metergram.Core.Extensions;
+namespace MeterGram.Core.Extensions;
 
 public static class ValidatorExtensions
 {

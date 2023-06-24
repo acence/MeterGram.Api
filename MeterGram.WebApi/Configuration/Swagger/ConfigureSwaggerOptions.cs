@@ -19,16 +19,16 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
         foreach (var description in _apiVersionDescriptionProvider.ApiVersionDescriptions)
         {
             options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
-
-            options.DocumentFilter<HealthCheckFilter>();
         }
+
+        options.DocumentFilter<HealthCheckFilter>();
     }
 
     private static OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)
     {
         return new OpenApiInfo
         {
-            Title = $"Fitness app WebApi {description.ApiVersion}",
+            Title = $"MeterGram Course WebApi {description.ApiVersion}",
             Version = description.ApiVersion.ToString(),
         };
     }

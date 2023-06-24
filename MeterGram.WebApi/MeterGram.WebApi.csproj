@@ -25,7 +25,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Metergram.Core\Metergram.Core.csproj" />
+    <ProjectReference Include="..\Metergram.Core\MeterGram.Core.csproj" />
     <ProjectReference Include="..\MeterGram.Domain.Models\MeterGram.Domain.Models.csproj" />
     <ProjectReference Include="..\MeterGram.Infrastructure.Interfaces\MeterGram.Infrastructure.Interfaces.csproj" />
     <ProjectReference Include="..\MeterGram.IoC.WebApi\MeterGram.IoC.WebApi.csproj" />

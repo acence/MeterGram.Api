@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
-using Metergram.Core.Behaviours;
+using MeterGram.Core.Behaviours;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace Metergram.Core.Configuration;
+namespace MeterGram.Core.Configuration;
 
 public static class ServicesConfigExtensions
 {
