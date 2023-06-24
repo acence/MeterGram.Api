@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>a9ad19c3-7225-49c7-8970-bfa1f7d0bfb6</UserSecretsId>
@@ -13,24 +13,22 @@
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
 		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+		<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-		<PackageReference Include="MediatR" Version="12.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.7">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.19">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="7.0.7" />
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.19" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Metergram.Core\Metergram.Core.csproj" />
     <ProjectReference Include="..\MeterGram.Domain.Models\MeterGram.Domain.Models.csproj" />
-    <ProjectReference Include="..\MeterGram.Infrastructure.Database\MeterGram.Infrastructure.Database.csproj" />
     <ProjectReference Include="..\MeterGram.Infrastructure.Interfaces\MeterGram.Infrastructure.Interfaces.csproj" />
-    <ProjectReference Include="..\MeterGram.Infrastructure.ProjectService\MeterGram.Infrastructure.ProjectService.csproj" />
+    <ProjectReference Include="..\MeterGram.IoC.WebApi\MeterGram.IoC.WebApi.csproj" />
     <ProjectReference Include="..\MeterGram.WebApi.Contracts\MeterGram.WebApi.Contracts.csproj" />
   </ItemGroup>
 

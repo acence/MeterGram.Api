@@ -1,11 +1,9 @@
-using Metergram.Core.Configuration;
-using MeterGram.Infrastructure.Database.Configuration;
-using MeterGram.Infrastructure.ProjectService.Configuration;
 using MeterGram.WebApi.Configuration;
 using MeterGram.WebApi.Configuration.Swagger;
 using MeterGram.WebApi.Contracts.Responses;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using MeterGram.IoC.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +11,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
-builder.Services.AddDatabaseServices(builder.Configuration);
-builder.Services.AddProjectService(builder.Configuration);
-builder.Services.AddMediatorServices().AddValidators();
+builder.Services.AddWebApiDependencies(builder.Configuration);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(ServerErrorResponse)));

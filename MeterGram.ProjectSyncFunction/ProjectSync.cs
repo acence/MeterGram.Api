@@ -1,4 +1,7 @@
 using System;
+using System.Threading.Tasks;
+using MediatR;
+using Metergram.Core.UseCases.Projects.Handlers;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
@@ -7,10 +10,21 @@ namespace MeterGram.ProjectSyncFunction
 {
     public class ProjectSync
     {
-        [FunctionName("Function1")]
-        public void Run([TimerTrigger("* * 0 * * *")]TimerInfo myTimer, ILogger log)
+        private readonly IMediator _mediator;
+
+        public ProjectSync(IMediator mediator)
         {
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+            _mediator = mediator;
+        }
+        [FunctionName("SynchronizeProjects")]
+        public async Task Run([TimerTrigger("* * 0 * * *")]TimerInfo myTimer, ILogger log)
+        {
+            log.LogInformation($"Project synchronization started at: {DateTime.Now}");
+
+            await _mediator.Send(new SynchronizeProjects.Query
+            {
+                ShouldGetUpdatedData = true,
+            }).ConfigureAwait(false);
         }
     }
 }

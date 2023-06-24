@@ -10,7 +10,8 @@ public static class HealthCheckExtensions
         services.Configure<Options.HealthCheckOptions>(configuration.GetSection("HealthCheck"));
         services
             .AddHealthChecks()
-            .AddSqlServer(configuration.GetConnectionString("AppDatabaseConnection")!, name: "SqlServer");
+            .AddSqlServer(configuration.GetConnectionString("AppDatabaseConnection")!, name: "SqlServer")
+            .AddUrlGroup(new Uri(new Uri(configuration.GetValue<string>("ProjectService:BaseUrl")!), "/swagger/index.html"), name: "ProjectService");
 
         return services;
     }
