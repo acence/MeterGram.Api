@@ -18,13 +18,9 @@ public class Startup : FunctionsStartup
         var executionContextOptions = builder.Services.BuildServiceProvider().GetService<IOptions<ExecutionContextOptions>>().Value;
         var basePath = executionContextOptions.AppDirectory;
 
-        var environment = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT");
-
         var config = new ConfigurationBuilder()
             .SetBasePath(basePath)
             .AddJsonFile($"local.settings.json", optional: true, reloadOnChange: false)
-            .AddJsonFile($"appSettings.json", optional: true, reloadOnChange: false)
-            .AddJsonFile($"appSettings.{environment}.json", optional: true, reloadOnChange: false)
             .AddEnvironmentVariables()
             .Build();
 

@@ -17,7 +17,7 @@ public class CourseSync
         _mediator = mediator;
     }
     [FunctionName("SynchronizeCourses")]
-    public async Task Run([TimerTrigger("* * 0 * * *")]TimerInfo myTimer, ILogger log)
+    public async Task Run([TimerTrigger("* * 0 * * *", RunOnStartup = true)]TimerInfo timer, ILogger log)
     {
         log.LogInformation($"Course synchronization started at: {DateTime.Now}");
 
