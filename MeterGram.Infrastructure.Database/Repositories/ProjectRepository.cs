@@ -40,7 +40,10 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
         var context = (_context as DatabaseContext)!;
         using (var transaction = await context.Database.BeginTransactionAsync(cancellationToken))
         {
-            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Courses ON;", cancellationToken);
+            if (context.Database.IsRelational())
+            {
+                await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Courses ON;", cancellationToken);
+            }
             foreach(var project in projects)
             {
                 if(!Entities.Any(x => x.Id == project.Id))
@@ -54,7 +57,12 @@ public class CourseRepository : BaseRepository<Course>, ICourseRepository
             }
 
             await context.SaveChangesAsync(cancellationToken);
-            await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Courses OFF", cancellationToken);
+
+            if (context.Database.IsRelational())
+            {
+                await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Courses OFF", cancellationToken);
+            }
+
             await transaction.CommitAsync(cancellationToken);
         }
     }

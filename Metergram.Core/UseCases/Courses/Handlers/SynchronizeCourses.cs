@@ -20,7 +20,7 @@ namespace MeterGram.Core.UseCases.Courses.Handlers
         public async Task Handle(Command request, CancellationToken cancellationToken)
         {
             var projects = await _projectExternalService.GetCoursesAsync(request.ShouldGetUpdatedData, cancellationToken);
-
+            
             await _projectRepository.BulkUpsertWithIdentity(projects);
         }
 

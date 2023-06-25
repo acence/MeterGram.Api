@@ -34,7 +34,7 @@ public class CoursesController : ControllerBase
         return await _mediator.SendAndProcessResponseAsync<GetAllCourses.Query, IList<CourseResponse>>(_mapper, query);
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("synchronize")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CourseResponse>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IEnumerable<ValidationErrorResponse>))]
