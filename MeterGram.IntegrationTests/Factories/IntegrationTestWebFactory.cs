@@ -1,15 +1,12 @@
-﻿using MeterGram.Infrastructure.CourseService;
-using MeterGram.Infrastructure.Database;
-using MeterGram.Infrastructure.Database.Interfaces;
+﻿using MeterGram.Infrastructure.Database;
 using MeterGram.Infrastructure.Interfaces.CourseService;
-using MeterGram.IntegrationTests.SeedData;
+using MeterGram.IntegrationTests.Seeders;
 using MeterGram.IntegrationTests.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace MeterGram.IntegrationTests.Factories
 {
@@ -35,27 +32,7 @@ namespace MeterGram.IntegrationTests.Factories
 
                 services.AddTransient<ICourseExternalService, CourseExternalMockService>();
 
-                var sp = services.BuildServiceProvider();
-                using (var scope = sp.CreateScope())
-                {
-                    var appContext = scope.ServiceProvider.GetRequiredService<IDatabaseContext>() as DatabaseContext;
-                    
-                    try
-                    {
-                        appContext!.Database.EnsureCreated();
-
-                        foreach (var project in CourseSeedData.Get()) {
-                            appContext.Entry(project).State = EntityState.Added;
-                        }
-                        appContext.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        //Log errors
-                        throw;
-                    }
-                    
-                }
+                DataSeeder.Seed(services);
             });
 
             builder.UseEnvironment("Development");

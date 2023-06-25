@@ -10,7 +10,7 @@ public class CourseResponse
     /// <summary>
     /// Course name
     /// </summary>
-    public String CourseName { get; set; } = null!;
+    public String Name { get; set; } = null!;
 
     /// <summary>
     /// Date

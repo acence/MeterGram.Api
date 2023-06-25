@@ -3,6 +3,6 @@
 public class CompanyApplicationResponseCourse
 {
     public Int32 Id { get; set; }
-    public String CourseName { get; set; } = null!;
+    public String Name { get; set; } = null!;
     public DateTime Date { get; set; }
 }

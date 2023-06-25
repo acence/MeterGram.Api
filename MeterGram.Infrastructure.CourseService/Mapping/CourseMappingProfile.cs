@@ -8,6 +8,7 @@ public class CourseMappingProfile : Profile
 {
     public CourseMappingProfile()
     {
-        CreateMap<CourseResponseModel, Course>();
+        CreateMap<CourseResponseModel, Course>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CourseName));
     }
 }

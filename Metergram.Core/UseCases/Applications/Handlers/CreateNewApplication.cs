@@ -8,14 +8,17 @@ public class CreateNewApplication : IRequestHandler<CreateNewApplication.Command
 {
     private readonly ICourseRepository _courseRepository;
     private readonly ICompanyApplicationRepository _companyApplicationRepository;
+    private readonly IParticipantRepository _participantRepository;
 
-    public CreateNewApplication(ICourseRepository courseRepository, ICompanyApplicationRepository companyApplicationRepository)
+    public CreateNewApplication(ICourseRepository courseRepository, ICompanyApplicationRepository companyApplicationRepository, IParticipantRepository participantRepository)
     {
         ArgumentNullException.ThrowIfNull(courseRepository);
         ArgumentNullException.ThrowIfNull(companyApplicationRepository);
+        ArgumentNullException.ThrowIfNull(participantRepository);
 
         _courseRepository = courseRepository;
         _companyApplicationRepository = companyApplicationRepository;
+        _participantRepository = participantRepository;
     }
     public async Task<CompanyApplication> Handle(Command request, CancellationToken cancellationToken)
     {
@@ -26,16 +29,22 @@ public class CreateNewApplication : IRequestHandler<CreateNewApplication.Command
             Name = request.Name,
             Email = request.Email,
             Phone = request.Phone,
-            Course = project!,
-            Participants = request.Participants.Select(x => new Participant
-            {
-                Name = request.Name,
-                Email = request.Email,
-                Phone = request.Phone,
-            }).ToList(),
+            Course = project!
         };
 
         await _companyApplicationRepository.InsertAsync(application, cancellationToken);
+
+        foreach(var participantRequest in request.Participants)
+        {
+            var participant = new Participant
+            {
+                CompanyApplication = application,
+                Name = participantRequest.Name,
+                Email = participantRequest.Email,
+                Phone = participantRequest.Phone,
+            };
+            await _participantRepository.InsertAsync(participant, cancellationToken);
+        }
 
         return application;
     }
