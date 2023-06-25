@@ -1,18 +1,14 @@
+using MeterGram.IoC.Common;
+using MeterGram.IoC.WebApi;
 using MeterGram.WebApi.Configuration;
 using MeterGram.WebApi.Configuration.Swagger;
 using MeterGram.WebApi.Contracts.Responses;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using MeterGram.IoC.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var useAzureAppConfig = builder.Configuration.GetValue<Boolean>("FeatureFlags:UseAzureAppConfig");
-if (useAzureAppConfig)
-{
-    string connectionString = builder.Configuration.GetConnectionString("AzureAppConfigConnection");
-    builder.Configuration.AddAzureAppConfiguration(connectionString);
-}
+builder.Configuration.AddAzureAppConfig();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

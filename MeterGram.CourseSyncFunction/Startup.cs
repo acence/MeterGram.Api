@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using MeterGram.IoC.Functions;
 using System;
 using System.Collections.Generic;
+using Azure.Identity;
 
 [assembly: FunctionsStartup(typeof(MeterGram.CourseSyncFunction.Startup))]
 namespace MeterGram.CourseSyncFunction;
@@ -17,11 +18,13 @@ public class Startup : FunctionsStartup
         var executionContextOptions = builder.Services.BuildServiceProvider().GetService<IOptions<ExecutionContextOptions>>().Value;
         var basePath = executionContextOptions.AppDirectory;
 
+        var environment = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT");
+
         var config = new ConfigurationBuilder()
             .SetBasePath(basePath)
             .AddJsonFile($"local.settings.json", optional: true, reloadOnChange: false)
             .AddJsonFile($"appSettings.json", optional: true, reloadOnChange: false)
-            .AddJsonFile($"appSettings.Development.json", optional: true, reloadOnChange: false)
+            .AddJsonFile($"appSettings.{environment}.json", optional: true, reloadOnChange: false)
             .AddEnvironmentVariables()
             .Build();
 
@@ -33,7 +36,14 @@ public class Startup : FunctionsStartup
 
             string connectionString = config.GetConnectionString("AzureAppConfigConnection");
             var azureConfig = new ConfigurationBuilder()
-                .AddAzureAppConfiguration(connectionString)
+                .AddAzureAppConfiguration(options =>
+                {
+                    options.Connect(connectionString)
+                        .ConfigureKeyVault(kv =>
+                        {
+                            kv.SetCredential(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ExcludeSharedTokenCacheCredential = true }));
+                        });
+                })
                 .Build();
             providers.AddRange(azureConfig.Providers);
 
