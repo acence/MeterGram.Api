@@ -6,14 +6,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["MeterGram.ProjectSyncFunction/MeterGram.ProjectSyncFunction.csproj", "MeterGram.ProjectSyncFunction/"]
-RUN dotnet restore "MeterGram.ProjectSyncFunction/MeterGram.ProjectSyncFunction.csproj"
+COPY ["MeterGram.CourseSyncFunction/MeterGram.CourseSyncFunction.csproj", "MeterGram.CourseSyncFunction/"]
+RUN dotnet restore "MeterGram.CourseSyncFunction/MeterGram.CourseSyncFunction.csproj"
 COPY . .
-WORKDIR "/src/MeterGram.ProjectSyncFunction"
-RUN dotnet build "MeterGram.ProjectSyncFunction.csproj" -c Release -o /app/build
+WORKDIR "/src/MeterGram.CourseSyncFunction"
+RUN dotnet build "MeterGram.CourseSyncFunction.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MeterGram.ProjectSyncFunction.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "MeterGram.CourseSyncFunction.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /home/site/wwwroot
