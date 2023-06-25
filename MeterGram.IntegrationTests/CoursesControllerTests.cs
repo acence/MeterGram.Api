@@ -16,7 +16,8 @@ namespace MeterGram.IntegrationTests
 
         [Fact]
         public async Task Get_CourseList_ReturnsActiveCourses()
-        {// Arrange
+        {
+            // Arrange
             var client = _factory.CreateClient();
 
             // Act 
@@ -29,7 +30,8 @@ namespace MeterGram.IntegrationTests
 
         [Fact]
         public async Task Get_CourseList_ReturnsAllCourses()
-        {// Arrange
+        {
+            // Arrange
             var client = _factory.CreateClient();
 
             // Act 

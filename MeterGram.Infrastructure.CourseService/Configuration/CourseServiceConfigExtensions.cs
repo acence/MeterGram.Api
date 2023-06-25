@@ -20,7 +20,7 @@ public static class CourseServiceConfigExtensions
 
         services.AddHttpClient<ICourseHttpService, CourseHttpService>(client =>
         {
-            client.BaseAddress = new Uri(configuration["CourseService:BaseUrl"]);
+            client.BaseAddress = new Uri(configuration.GetValue<string>("CourseService:BaseUrl"));
         })
         .AddPolicyHandler(GetRetryPolicy());
 

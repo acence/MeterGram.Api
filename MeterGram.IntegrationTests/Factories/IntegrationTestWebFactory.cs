@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MeterGram.IntegrationTests.Factories
@@ -35,7 +36,7 @@ namespace MeterGram.IntegrationTests.Factories
                 DataSeeder.Seed(services);
             });
 
-            builder.UseEnvironment("Development");
+            builder.UseEnvironment("Test");
         }
     }
 }
